@@ -56,7 +56,7 @@ class Py3CW:
     def request(self, entity: str, action: str = '', action_id: str = None, payload: any = None):
         api = API_METHODS[entity][action]
         method, api_path = api
-        api_path = api_path.replace('{id}', action_id)
+        api_path = api_path.replace('{id}', action_id or '')
 
         return self.__make_request(
             http_method=method,
