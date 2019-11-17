@@ -61,8 +61,12 @@ An `action` is represented by a ... well, an action of a specific category. Ther
 
 3Commas Docs: https://github.com/3commas-io/3commas-official-api-docs
 
-Accounts: https://github.com/3commas-io/3commas-official-api-docs/blob/master/accounts_api.md\
-Bots: https://github.com/3commas-io/3commas-official-api-docs/blob/master/bots_api.md\
-Deals: https://github.com/3commas-io/3commas-official-api-docs/blob/master/deals_api.md\
-Marketplace: https://github.com/3commas-io/3commas-official-api-docs/blob/master/marketplace_api.md\
+Accounts: https://github.com/3commas-io/3commas-official-api-docs/blob/master/accounts_api.md
+
+Bots: https://github.com/3commas-io/3commas-official-api-docs/blob/master/bots_api.md
+
+Deals: https://github.com/3commas-io/3commas-official-api-docs/blob/master/deals_api.md
+
+Marketplace: https://github.com/3commas-io/3commas-official-api-docs/blob/master/marketplace_api.md
+
 Smart Trades: https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_api.md
