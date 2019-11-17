@@ -35,13 +35,13 @@ error, data  = p3cw.request(
     }
 )
 
-# With account_id replaced in URL
+# With action_id replaced in URL
 # Destruct response to error and data
 # and check first if we have an error, otherwise check the data
 error, data = p3cw.request(
     entity='smart_trades', 
     action='pie_chart_data',
-    account_id='123456'
+    action_id='123456'
 )
 ```
 
@@ -51,7 +51,7 @@ An `entity` represents main categories. Meaning, you have `accounts`, `bots`, `m
 
 An `action` is represented by a ... well, an action of a specific category. There are multiple actions you can use (check 3commas API)
 
-`account_id` is used to replace the necessary account needed on some actions. For example the `action` `sell_all_to_btc` requires the `account_id` (`POST /ver1/accounts/{account_id}/load_balances`)
+`action_id` is used to replace the necessary account_id or bot_id or deal_id (you get the picture) needed on some actions. For example the `action` `sell_all_to_btc` requires the `account_id` (`POST /ver1/accounts/{account_id}/load_balances`)
 
 `payload` is the data you send.
 
