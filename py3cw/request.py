@@ -40,9 +40,8 @@ class Py3CW:
 
             response_json = json.loads(response.text)
 
-            if type(response_json) is dict:
-                if 'error' in response_json:
-                    return response_json, None
+            if type(response_json) is dict and 'error' in response_json:
+                return response_json, None
             else:
                 return None, response_json
 
