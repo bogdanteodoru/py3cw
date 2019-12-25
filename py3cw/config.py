@@ -61,7 +61,7 @@ API_METHODS = {
         'cancel_order': ('POST', '{id}/cancel_order'),
         'add_funds': ('POST', '{id}/add_funds'),
         'step_panic_sell': ('POST', '{id}/step_panic_sell'),
-        'update': ('POST', '{id}/update'),
+        'update': ('PATCH', '{id}/update'),
         'cancel': ('POST', '{id}/cancel'),
         'panic_sell': ('POST', '{id}/panic_sell'),
         'force_process': ('POST', '{id}/force_process'),
