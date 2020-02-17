@@ -11,8 +11,11 @@ API_METHODS = {
         'market_list': ('GET', 'market_list'),
         'market_pairs': ('GET', 'market_pairs'),
         'currency_rates': ('GET', 'currency_rates'),
+        'active_trading_entities': ('GET', '{id}/active_trading_entities'),
         'sell_all_to_usd': ('POST', '{id}/sell_all_to_usd'),
         'sell_all_to_btc': ('POST', '{id}/sell_all_to_btc'),
+        'balance_chart_data': ('GET', '{id}/balance_chart_data'),
+        'load_balances': ('POST', '{id}/load_balances'),
         'rename': ('POST', '{id}/rename'),
         'pie_chart_data': ('POST', '{id}/pie_chart_data'),
         'account_table_data': ('POST', '{id}/account_table_data'),
@@ -46,6 +49,17 @@ API_METHODS = {
         'panic_sell_all_deals': ('POST', '{id}/panic_sell_all_deals'),
         'cancel_all_deals': ('POST', '{id}/cancel_all_deals'),
         'show': ('GET', '{id}/show')
+    },
+    'grid_bots': {
+        '': ('GET', ''),
+        'ai': ('POST', 'ai'),
+        'manual': ('POST', 'manual'),
+        'ai_settings': ('GET', 'ai_settings'),
+        'profits': ('GET', '{id}/profits'),
+        'bot': ('GET', '{id}'),
+        'delete_bot': ('DELETE', '{id}'),
+        'disable_bot': ('POST', '{id}/disable'),
+        'enable_bot': ('POST', '{id}/enable')
     },
     'marketplace': {
         'items': ('GET', 'items'),

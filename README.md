@@ -69,4 +69,6 @@ Deals: https://github.com/3commas-io/3commas-official-api-docs/blob/master/deals
 
 Marketplace: https://github.com/3commas-io/3commas-official-api-docs/blob/master/marketplace_api.md
 
+Grid Bots: https://github.com/3commas-io/3commas-official-api-docs/blob/master/grid_bots_api.md
+
 Smart Trades: https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_api.md
