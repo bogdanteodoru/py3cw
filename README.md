@@ -1,5 +1,7 @@
 # py3cw
 
+![Upload Python Package](https://github.com/bogdanteodoru/py3cw/workflows/Upload%20Python%20Package/badge.svg?branch=master)
+
 Unofficial wrapper for the [3Commas API](https://github.com/3commas-io/3commas-official-api-docs) written in Python.
 ***
 
