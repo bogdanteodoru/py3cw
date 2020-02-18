@@ -74,3 +74,11 @@ Marketplace: https://github.com/3commas-io/3commas-official-api-docs/blob/master
 Grid Bots: https://github.com/3commas-io/3commas-official-api-docs/blob/master/grid_bots_api.md
 
 Smart Trades: https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_api.md
+
+***
+
+Best used with [Binance](https://www.binance.com/en/register?ref=XEK765NE).
+
+buy me a beer 🍺
+
+ETH: 0x0c2EA600d8bECE889F998D6a22332298E879940b
