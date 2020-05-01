@@ -48,7 +48,7 @@ class Py3CW:
                     'APIKEY': self.key,
                     'Signature': signature
                 },
-                data=payload
+                json=payload
             )
 
             response_json = json.loads(response.text)
