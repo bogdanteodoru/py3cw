@@ -7,7 +7,12 @@ from .utils import verify_request
 from requests.exceptions import HTTPError
 
 
-class Py3CW:
+class IPy3CW:
+    def request(self, entity: str, action: str = '', action_id: str = None, payload: any = None):
+        pass
+
+
+class Py3CW(IPy3CW):
 
     def __init__(self, key: str, secret: str):
         """
