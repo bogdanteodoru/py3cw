@@ -5,6 +5,7 @@ import json
 from .config import API_URL, API_VERSION, API_METHODS
 from .utils import verify_request
 from requests.exceptions import HTTPError
+from urllib.parse import urlencode
 
 
 class IPy3CW:
@@ -79,6 +80,11 @@ class Py3CW(IPy3CW):
         method, api_path = api
         api_path = api_path.replace('{id}', action_id or '')
 
+        if method == 'GET' and payload is not None:
+            params = urlencode(payload)
+        else:
+            params = ''
+
         return self.__make_request(
             http_method=method,
             path='{entity}{separator}{api_path}'.format(
@@ -86,6 +92,6 @@ class Py3CW(IPy3CW):
                 separator='/' if api_path else '',
                 api_path=api_path or ''
             ),
-            params='',
+            params=params,
             payload=payload
         )
