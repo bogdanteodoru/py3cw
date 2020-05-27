@@ -79,5 +79,8 @@ API_METHODS = {
         'cancel': ('POST', '{id}/cancel'),
         'panic_sell': ('POST', '{id}/panic_sell'),
         'force_process': ('POST', '{id}/force_process'),
+    },
+    'users': {
+        'change_mode': ('POST', 'change_mode')
     }
 }
