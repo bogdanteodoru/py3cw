@@ -57,7 +57,7 @@ API_METHODS = {
         '': ('GET', ''),
         'ai': ('POST', 'ai'),
         'manual': ('POST', 'manual'),
-        'ai_settings': ('POST', 'ai_settings'),
+        'ai_settings': ('GET', 'ai_settings'),
         'market_orders': ('GET', '{id}/market_orders'),
         'profits': ('GET', '{id}/profits'),
         'get': ('GET', '{id}'),
