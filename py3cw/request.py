@@ -5,6 +5,7 @@ import json
 from .config import API_URL, API_VERSION, API_METHODS
 from .utils import verify_request
 from requests.exceptions import HTTPError
+from urllib.parse import urlencode, quote_plus
 
 
 class Py3CW:
@@ -48,7 +49,7 @@ class Py3CW:
                     'APIKEY': self.key,
                     'Signature': signature
                 },
-                data=payload
+                json=payload
             )
 
             response_json = json.loads(response.text)
@@ -73,6 +74,7 @@ class Py3CW:
         api = API_METHODS[entity][action]
         method, api_path = api
         api_path = api_path.replace('{id}', action_id or '')
+        is_get_with_payload = method == 'GET' and payload is not None
 
         return self.__make_request(
             http_method=method,
@@ -81,6 +83,6 @@ class Py3CW:
                 separator='/' if api_path else '',
                 api_path=api_path or ''
             ),
-            params='',
+            params=urlencode(payload, quote_via=quote_plus) if is_get_with_payload else '',
             payload=payload
         )
