@@ -34,7 +34,7 @@ class Py3CW(IPy3CW):
         Generates the signature needed for 3commas API communication
         """
         encoded_key = str.encode(self.secret)
-        message = str.encode(API_VERSION + path + data)
+        message = str.encode(path + data)
         signature = hmac.new(encoded_key, message, hashlib.sha256).hexdigest()
         return signature
 
@@ -44,12 +44,21 @@ class Py3CW(IPy3CW):
         success and error responses.
         """
 
-        signature = self.__generate_signature(path, params)
+        if (params is not None and len(params) > 0):
+            relative_url = f"{API_VERSION}{path}?{params}"
+        else:
+            relative_url = f"{API_VERSION}{path}"
+
+        if (http_method == "GET" or (payload is not None and len(payload) == 0)):
+            payload = None
+
+        signature = self.__generate_signature(relative_url, (json.dumps(payload) if payload is not None else ''))
 
         try:
+            request_url = f"{API_URL}{relative_url}"
             response = requests.request(
                 method=http_method,
-                url=API_URL + API_VERSION + path + '?' + params,
+                url=request_url,
                 headers={
                     'APIKEY': self.key,
                     'Signature': signature
