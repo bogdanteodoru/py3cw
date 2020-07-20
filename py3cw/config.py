@@ -11,15 +11,18 @@ API_METHODS = {
         'market_list': ('GET', 'market_list'),
         'market_pairs': ('GET', 'market_pairs'),
         'currency_rates': ('GET', 'currency_rates'),
-        'active_trading_entities': ('GET', '{id}/active_trading_entities'),
         'sell_all_to_usd': ('POST', '{id}/sell_all_to_usd'),
         'sell_all_to_btc': ('POST', '{id}/sell_all_to_btc'),
-        'balance_chart_data': ('GET', '{id}/balance_chart_data'),
-        'load_balances': ('POST', '{id}/load_balances'),
         'rename': ('POST', '{id}/rename'),
         'pie_chart_data': ('POST', '{id}/pie_chart_data'),
         'account_table_data': ('POST', '{id}/account_table_data'),
-        'remove': ('POST', '{id}/remove')
+        'remove': ('POST', '{id}/remove'),
+        'transfer': ('POST', 'transfer'),
+        'transfer_history': ('GET', 'transfer_history'),
+        'transfer_data': ('GET', 'transfer_data'),
+        'active_trading_entities': ('GET', '{id}/active_trading_entities'),
+        'balance_chart_data': ('GET', '{id}/balance_chart_data'),
+        'load_balances': ('POST', '{id}/load_balances')
     },
     'deals': {
         '': ('GET', ''),
@@ -55,11 +58,13 @@ API_METHODS = {
         'ai': ('POST', 'ai'),
         'manual': ('POST', 'manual'),
         'ai_settings': ('GET', 'ai_settings'),
+        'market_orders': ('GET', '{id}/market_orders'),
         'profits': ('GET', '{id}/profits'),
-        'bot': ('GET', '{id}'),
-        'delete_bot': ('DELETE', '{id}'),
-        'disable_bot': ('POST', '{id}/disable'),
-        'enable_bot': ('POST', '{id}/enable')
+        'get': ('GET', '{id}'),
+        'delete': ('DELETE', '{id}'),
+        'disable': ('POST', '{id}/disable'),
+        'enable': ('POST', '{id}/enable'),
+        'required_balances': ('GET', '{id}/required_balances')
     },
     'marketplace': {
         'items': ('GET', 'items'),
@@ -78,6 +83,9 @@ API_METHODS = {
         'update': ('PATCH', '{id}/update'),
         'cancel': ('POST', '{id}/cancel'),
         'panic_sell': ('POST', '{id}/panic_sell'),
-        'force_process': ('POST', '{id}/force_process'),
+        'force_process': ('POST', '{id}/force_process')
+    },
+    'users': {
+        'change_mode': ('POST', 'change_mode')
     }
 }
