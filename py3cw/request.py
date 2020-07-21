@@ -8,6 +8,11 @@ from requests.exceptions import HTTPError
 from urllib.parse import urlencode, quote_plus
 
 
+class IPy3CW:
+    def request(self, entity: str, action: str = '', action_id: str = None, payload: any = None):
+        pass
+
+
 class Py3CW:
 
     def __init__(self, key: str, secret: str):
@@ -29,7 +34,7 @@ class Py3CW:
         Generates the signature needed for 3commas API communication
         """
         encoded_key = str.encode(self.secret)
-        message = str.encode(API_VERSION + path + data)
+        message = str.encode(path + data)
         signature = hmac.new(encoded_key, message, hashlib.sha256).hexdigest()
         return signature
 
@@ -38,13 +43,34 @@ class Py3CW:
         Private method that makes the actual request. Returns the response in JSON format for both
         success and error responses.
         """
+        relative_url = f"{API_VERSION}{path}"
 
-        signature = self.__generate_signature(path, params)
+        """
+        If there are any params on the request, concatenate the strings together
+        with the new params.
+        """
+        if params is not None and len(params) > 0:
+            relative_url = relative_url + f"?{params}"
+
+        """
+        Make sure the payload is None if the method is GET or when in fact
+        we have no payload.
+        """
+        if http_method == "GET" or (payload is not None and len(payload) == 0):
+            payload = None
+
+        signature = self.__generate_signature(relative_url, (json.dumps(payload) if payload is not None else ''))
+
+        """
+        Compute the absolute URL. Keep in mind that the signature generation for whatever reason doesn't
+        work when you try to compute it with absolute URL. You need to create it with relative URL.
+        """
+        absolute_url = f"{API_URL}{relative_url}"
 
         try:
             response = requests.request(
                 method=http_method,
-                url=API_URL + API_VERSION + path + '?' + params,
+                url=absolute_url,
                 headers={
                     'APIKEY': self.key,
                     'Signature': signature
