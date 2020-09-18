@@ -1,6 +1,7 @@
 API_URL = 'https://api.3commas.io'
-API_VERSION = '/public/api/ver1/'
-#API_VERSION = '/public/api/ver2/'
+API_VERSION_V1 = '/public/api/ver1/'
+API_VERSION_V2 = '/public/api/v2/'
+API_VERSION_V2_ENTITIES = ['smart_trades_v2']
 
 # API methods from
 # https://github.com/3commas-io/3commas-official-api-docs
@@ -86,20 +87,19 @@ API_METHODS = {
         'panic_sell': ('POST', '{id}/panic_sell'),
         'force_process': ('POST', '{id}/force_process')
     },
-    'smart_tradesv2': {
-        'API_VERSION': '/public/api/ver2/',
+    'smart_trades_v2': {
         '': ('GET', ''),
-        'create_simple_sell': ('POST', 'create_simple_sell'),
-        'create_simple_buy': ('POST', 'create_simple_buy'),
-        'create_smart_sell': ('POST', 'create_smart_sell'),
-        'create_smart_cover': ('POST', 'create_smart_cover'),
-        'create_smart_trade': ('POST', 'create_smart_trade'),
-        'cancel_order': ('POST', '{id}/cancel_order'),
+        'new': ('POST', ''),
+        'get_by_id': ('GET', '{id}'),
+        'update': ('PATCH', '{id}'),
+        'cancel': ('DELETE', '{id}'),
+        'get_trades': ('GET', '{id}/trades'),
         'add_funds': ('POST', '{id}/add_funds'),
-        'step_panic_sell': ('POST', '{id}/step_panic_sell'),
-        'update': ('PATCH', '{id}/update'),
-        'cancel': ('POST', '{id}/cancel'),
-        'panic_sell': ('POST', '{id}/panic_sell'),
+        'close_by_market': ('POST', '{id}/close_by_market'),
+        'cancel_trade': ('DELETE', '{id}/trades/{sub_id}'),
+        'panic_close_by_market': ('POST', '{id}/trades/{sub_id}/close_by_market'),
+        'set_note': ('POST', '{id}/set_note'),
+        'force_start': ('POST', '{id}/force_start'),
         'force_process': ('POST', '{id}/force_process')
     },
     'users': {
