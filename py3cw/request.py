@@ -2,7 +2,7 @@ import hashlib
 import hmac
 import requests
 import json
-from .config import API_URL, API_VERSION, API_METHODS
+from .config import API_URL, API_VERSION_V1, API_VERSION_V2, API_VERSION_V2_ENTITIES, API_METHODS
 from .utils import verify_request
 from requests.exceptions import HTTPError
 from urllib.parse import urlencode, quote_plus
@@ -13,7 +13,7 @@ class IPy3CW:
         pass
 
 
-class Py3CW:
+class Py3CW(IPy3CW):
 
     def __init__(self, key: str, secret: str):
         """
@@ -43,7 +43,13 @@ class Py3CW:
         Private method that makes the actual request. Returns the response in JSON format for both
         success and error responses.
         """
-        relative_url = f"{API_VERSION}{path}"
+        entity = path.split('/')[0]
+
+        if entity in API_VERSION_V2_ENTITIES:
+            path = path.replace('_v2', '')
+            relative_url = f"{API_VERSION_V2}{path}"
+        else:
+            relative_url = f"{API_VERSION_V1}{path}"
 
         """
         If there are any params on the request, concatenate the strings together
@@ -92,7 +98,7 @@ class Py3CW:
             return {'error': True, 'msg': 'Other error occurred: {0}'.format(err)}, None
 
     @verify_request
-    def request(self, entity: str, action: str = '', action_id: str = None, payload: any = None):
+    def request(self, entity: str, action: str = '', action_id: str = None, action_sub_id: str = None, payload: any = None):
         """
         Constructs the API Url and makes the request.
         """
@@ -100,6 +106,7 @@ class Py3CW:
         api = API_METHODS[entity][action]
         method, api_path = api
         api_path = api_path.replace('{id}', action_id or '')
+        api_path = api_path.replace('{sub_id}', action_sub_id or '')
         is_get_with_payload = method == 'GET' and payload is not None
 
         return self.__make_request(

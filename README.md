@@ -75,6 +75,7 @@ Grid Bots: https://github.com/3commas-io/3commas-official-api-docs/blob/master/g
 
 Smart Trades: https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_api.md
 
+Smart Trades V2: https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_v2_api.md
 ***
 
 Best used with [Binance](https://www.binance.com/en/register?ref=XEK765NE).
