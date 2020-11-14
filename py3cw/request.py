@@ -1,7 +1,7 @@
 import hashlib
 import hmac
 import requests
-import json
+import json, pdb
 from .config import API_URL, API_VERSION, API_METHODS
 from .utils import verify_request
 from requests.exceptions import HTTPError
@@ -38,12 +38,16 @@ class Py3CW:
         signature = hmac.new(encoded_key, message, hashlib.sha256).hexdigest()
         return signature
 
-    def __make_request(self, http_method: str, path: str, params: any, payload: any):
+    def __make_request(self, http_method: str, path: str, params: any, payload: any, api_url_version=None):
+        #pdb.set_trace()
         """
         Private method that makes the actual request. Returns the response in JSON format for both
         success and error responses.
         """
-        relative_url = f"{API_VERSION}{path}"
+        if api_url_version is not None :
+            relative_url = f"{api_url_version}{path}"
+        else :
+            relative_url = f"{API_VERSION}{path}"
 
         """
         If there are any params on the request, concatenate the strings together
@@ -92,7 +96,8 @@ class Py3CW:
             return {'error': True, 'msg': 'Other error occurred: {0}'.format(err)}, None
 
     @verify_request
-    def request(self, entity: str, action: str = '', action_id: str = None, payload: any = None):
+    def request(self, entity: str, action: str = '', action_id: str = None, payload: any = None , api_url_version=None):
+        #pdb.set_trace()
         """
         Constructs the API Url and makes the request.
         """
@@ -110,5 +115,6 @@ class Py3CW:
                 api_path=api_path or ''
             ),
             params=urlencode(payload, quote_via=quote_plus) if is_get_with_payload else '',
-            payload=payload
+            payload=payload,
+            api_url_version=api_url_version
         )
