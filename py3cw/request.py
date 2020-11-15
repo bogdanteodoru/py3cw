@@ -7,7 +7,6 @@ from .utils import verify_request
 from requests.exceptions import HTTPError
 from urllib.parse import urlencode, quote_plus
 
-
 class IPy3CW:
     def request(self, entity: str, action: str = '', action_id: str = None, payload: any = None):
         pass
@@ -81,7 +80,8 @@ class Py3CW(IPy3CW):
                     'APIKEY': self.key,
                     'Signature': signature
                 },
-                json=payload
+                json=payload,
+                timeout=(5,10)
             )
 
             response_json = json.loads(response.text)
