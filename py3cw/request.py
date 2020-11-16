@@ -81,7 +81,8 @@ class Py3CW(IPy3CW):
                     'APIKEY': self.key,
                     'Signature': signature
                 },
-                json=payload
+                json=payload,
+                timeout=(5,10)
             )
 
             response_json = json.loads(response.text)
