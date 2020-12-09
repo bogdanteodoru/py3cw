@@ -6,6 +6,8 @@ from .config import API_URL, API_VERSION_V1, API_VERSION_V2, API_VERSION_V2_ENTI
 from .utils import verify_request
 from requests.exceptions import HTTPError
 from urllib.parse import urlencode, quote_plus
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 
 class IPy3CW:
@@ -28,6 +30,14 @@ class Py3CW(IPy3CW):
 
         self.key = key
         self.secret = secret
+
+        """
+        Set the number of retries to be 5 every 0.1 seconds... then 0.2, 0.3...
+        You get the idea.
+        """
+        self.session = requests.Session()
+        retries = Retry(total=5, backoff_factor=0.1, status_forcelist=[500, 502, 503, 504])
+        self.session.mount('https://', HTTPAdapter(max_retries=retries))
 
     def __generate_signature(self, path: str, data: str) -> str:
         """
@@ -74,7 +84,7 @@ class Py3CW(IPy3CW):
         absolute_url = f"{API_URL}{relative_url}"
 
         try:
-            response = requests.request(
+            response = self.session.request(
                 method=http_method,
                 url=absolute_url,
                 headers={
@@ -82,7 +92,7 @@ class Py3CW(IPy3CW):
                     'Signature': signature
                 },
                 json=payload,
-                timeout=(5,10)
+                timeout=(5, 10)
             )
 
             response_json = json.loads(response.text)
