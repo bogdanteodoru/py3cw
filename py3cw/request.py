@@ -17,12 +17,14 @@ class IPy3CW:
 
 class Py3CW(IPy3CW):
 
-    def __init__(self, key: str, secret: str):
+    def __init__(self, key: str, secret: str, request_options=None):
         """
         Init the library with a 3commas key and secret strings. Get keys from your account API
         (https://3commas.io/api_access_tokens) page
         """
 
+        if request_options is None:
+            request_options = {}
         if key is None or key == '':
             raise ValueError('Please enter a 3commas API key')
         if secret is None or secret == '':
@@ -30,13 +32,20 @@ class Py3CW(IPy3CW):
 
         self.key = key
         self.secret = secret
+        self.request_timeout = request_options.get('request_timeout', 30)
+        self.request_retries_count = request_options.get('nr_of_retries', 5)
+        self.request_retry_status_codes = request_options.get('retry_status_codes', [500, 502, 503, 504])
 
         """
         Set the number of retries to be 5 every 0.1 seconds... then 0.2, 0.3...
         You get the idea.
         """
         self.session = requests.Session()
-        retries = Retry(total=5, backoff_factor=0.1, status_forcelist=[500, 502, 503, 504])
+        retries = Retry(
+            total=self.request_retries_count,
+            backoff_factor=0.1,
+            status_forcelist=self.request_retry_status_codes
+        )
         self.session.mount('https://', HTTPAdapter(max_retries=retries))
 
     def __generate_signature(self, path: str, data: str) -> str:
@@ -48,7 +57,7 @@ class Py3CW(IPy3CW):
         signature = hmac.new(encoded_key, message, hashlib.sha256).hexdigest()
         return signature
 
-    def __make_request(self, http_method: str, path: str, params: any, payload: any):
+    def __make_request(self, http_method: str, path: str, params: any, payload: any, retry_count=0):
         """
         Private method that makes the actual request. Returns the response in JSON format for both
         success and error responses.
@@ -92,15 +101,29 @@ class Py3CW(IPy3CW):
                     'Signature': signature
                 },
                 json=payload,
-                timeout=(5, 10)
+                timeout=(self.request_timeout, self.request_timeout)
             )
 
             response_json = json.loads(response.text)
 
             if type(response_json) is dict and 'error' in response_json:
-                return response_json, None
+                error_status_code = response_json.get('error').get('status_code')
+                if (
+                    error_status_code and
+                    error_status_code in self.request_retry_status_codes and
+                    retry_count < self.request_retries_count
+                ):
+                    return self.__make_request(
+                        http_method=http_method,
+                        path=path,
+                        params=params,
+                        payload=payload,
+                        retry_count=retry_count + 1
+                    )
+                else:
+                    return response_json, {}
             else:
-                return None, response_json
+                return {}, response_json
 
         except HTTPError as http_err:
             return {'error': True, 'msg': 'HTTP error occurred: {0}'.format(http_err)}, None
@@ -109,7 +132,8 @@ class Py3CW(IPy3CW):
             return {'error': True, 'msg': 'Other error occurred: {0}'.format(err)}, None
 
     @verify_request
-    def request(self, entity: str, action: str = '', action_id: str = None, action_sub_id: str = None, payload: any = None):
+    def request(self, entity: str, action: str = '', action_id: str = None, action_sub_id: str = None,
+                payload: any = None):
         """
         Constructs the API Url and makes the request.
         """

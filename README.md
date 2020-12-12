@@ -16,7 +16,23 @@ How to use
 ```python
 from py3cw.request import Py3CW
 
-p3cw = Py3CW(key='', secret='')
+# request_options is optional, as all the keys from the dict
+# so you can only change what you want.
+# default options for request_options are:
+# request_timeout: 30s (30 for connect, 30 for read)
+# nr_of_retries: 5
+# retry_status_codes: [500, 502, 503, 504]
+# NOTE: Nr of retries and retry_status_codes will also be used if we get 
+# an falsy success from 3 commas (eg: { "error": { "status_code": 502 }})
+p3cw = Py3CW(
+    key='', 
+    secret='',
+    request_options={
+        'request_timeout': 10,
+        'nr_of_retries': 1,
+        'retry_status_codes': [502]
+    }
+)
 
 # With no action
 # Destruct response to error and data
