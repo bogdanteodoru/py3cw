@@ -128,8 +128,9 @@ class Py3CW(IPy3CW):
         except HTTPError as http_err:
             return {'error': True, 'msg': 'HTTP error occurred: {0}'.format(http_err)}, None
 
-        except Exception as err:
-            return {'error': True, 'msg': 'Other error occurred: {0}'.format(err)}, None
+        except Exception:
+            return {'error': True, 'msg': 'Other error occurred: {} {}.'.format(
+                response_json.get('error'), response_json.get('error_description'))}, None
 
     @verify_request
     def request(self, entity: str, action: str = '', action_id: str = None, action_sub_id: str = None,
