@@ -48,7 +48,10 @@ error, data = p3cw.request(
 error, data  = p3cw.request(
     entity='smart_trades_v2', 
     action='new', 
-    payload={}
+    payload={
+        "account_id": 123456,
+        ......
+    }
 )
 
 # With action_id replaced in URL
