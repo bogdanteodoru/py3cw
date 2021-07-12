@@ -13,6 +13,9 @@ pip install py3cw
 
 How to use
 
+NOTE: Untill I manage to refactor and remove V1, please use the API with ```entity='smart_trades_v2'```. Thank you!
+*** 
+
 ```python
 from py3cw.request import Py3CW
 
