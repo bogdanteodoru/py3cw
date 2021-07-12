@@ -13,9 +13,6 @@ pip install py3cw
 
 How to use
 
-NOTE: Untill I manage to refactor and remove V1, please use the API with ```entity='smart_trades_v2'```. Thank you!
-*** 
-
 ```python
 from py3cw.request import Py3CW
 
@@ -41,7 +38,7 @@ p3cw = Py3CW(
 # Destruct response to error and data
 # and check first if we have an error, otherwise check the data
 error, data = p3cw.request(
-    entity='smart_trades',
+    entity='smart_trades_v2',
     action=''
 )
 
@@ -49,24 +46,20 @@ error, data = p3cw.request(
 # Destruct response to error and data
 # and check first if we have an error, otherwise check the data
 error, data  = p3cw.request(
-    entity='smart_trades', 
-    action='create_smart_trade', 
-    payload={
-        "account_id": 123456
-    }
+    entity='smart_trades_v2', 
+    action='new', 
+    payload={}
 )
 
 # With action_id replaced in URL
 # Destruct response to error and data
 # and check first if we have an error, otherwise check the data
 error, data = p3cw.request(
-    entity='smart_trades', 
-    action='pie_chart_data',
+    entity='smart_trades_v2', 
+    action='get_by_id',
     action_id='123456'
 )
 ```
-
-*** 
 
 An `entity` represents main categories. Meaning, you have `accounts`, `bots`, `marketplace`, `deals` or `smart_trades`
 
@@ -92,9 +85,7 @@ Marketplace: https://github.com/3commas-io/3commas-official-api-docs/blob/master
 
 Grid Bots: https://github.com/3commas-io/3commas-official-api-docs/blob/master/grid_bots_api.md
 
-Smart Trades: https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_api.md
-
-Smart Trades V2: https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_v2_api.md
+Smart Trades: https://github.com/3commas-io/3commas-official-api-docs/blob/master/smart_trades_v2_api.md
 ***
 
 Best used with [Binance](https://www.binance.com/en/register?ref=XEK765NE).

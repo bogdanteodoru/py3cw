@@ -1,7 +1,7 @@
 API_URL = 'https://api.3commas.io'
 API_VERSION_V1 = '/public/api/ver1/'
 API_VERSION_V2 = '/public/api/v2/'
-API_VERSION_V2_ENTITIES = ['smart_trades_v2']
+API_VERSION_V2_ENTITIES = ['smart_trades', 'smart_trades_v2']
 
 # API methods from
 # https://github.com/3commas-io/3commas-official-api-docs
@@ -74,7 +74,9 @@ API_METHODS = {
         'items': ('GET', 'items'),
         'signals': ('GET', '{id}/signals')
     },
-    'smart_trades': {
+    # smart_trades has been deprecated
+    # Please don't use it anymore. Left here only for history reference
+    'smart_trades_deprecated': {
         '': ('GET', ''),
         'create_simple_sell': ('POST', 'create_simple_sell'),
         'create_simple_buy': ('POST', 'create_simple_buy'),
