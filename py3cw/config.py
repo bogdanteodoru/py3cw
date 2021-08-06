@@ -107,6 +107,7 @@ API_METHODS = {
         'force_process': ('POST', '{id}/force_process')
     },
     'users': {
-        'change_mode': ('POST', 'change_mode')
+        'change_mode': ('POST', 'change_mode'),
+        'current_mode': ('GET', 'current_mode')
     }
 }
