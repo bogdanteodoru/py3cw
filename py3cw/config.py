@@ -8,6 +8,7 @@ API_VERSION_V2_ENTITIES = ['smart_trades', 'smart_trades_v2']
 API_METHODS = {
     'accounts': {
         '': ('GET', ''),
+        'account_info': ('GET', '{id}'),
         'new': ('POST', 'new'),
         'update': ('POST', 'update'),
         'market_list': ('GET', 'market_list'),
