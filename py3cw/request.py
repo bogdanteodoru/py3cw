@@ -57,7 +57,8 @@ class Py3CW(IPy3CW):
         signature = hmac.new(encoded_key, message, hashlib.sha256).hexdigest()
         return signature
 
-    def __make_request(self, http_method: str, path: str, params: any, payload: any, retry_count=0):
+    def __make_request(self, http_method: str, path: str, params: any, payload: any, additional_headers: dict,
+                       retry_count=0):
         """
         Private method that makes the actual request. Returns the response in JSON format for both
         success and error responses.
@@ -98,7 +99,8 @@ class Py3CW(IPy3CW):
                 url=absolute_url,
                 headers={
                     'APIKEY': self.key,
-                    'Signature': signature
+                    'Signature': signature,
+                    **additional_headers
                 },
                 json=payload,
                 timeout=(self.request_timeout, self.request_timeout)
@@ -137,7 +139,7 @@ class Py3CW(IPy3CW):
 
     @verify_request
     def request(self, entity: str, action: str = '', action_id: str = None, action_sub_id: str = None,
-                payload: any = None):
+                payload: any = None, additional_headers: dict = None):
         """
         Constructs the API Url and makes the request.
         """
@@ -156,5 +158,6 @@ class Py3CW(IPy3CW):
                 api_path=api_path or ''
             ),
             params=urlencode(payload, quote_via=quote_plus) if is_get_with_payload else '',
-            payload=payload
+            payload=payload,
+            additional_headers=additional_headers or dict()
         )
