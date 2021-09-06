@@ -57,7 +57,7 @@ class Py3CW(IPy3CW):
         signature = hmac.new(encoded_key, message, hashlib.sha256).hexdigest()
         return signature
 
-    def __make_request(self, http_method: str, path: str, params: any, payload: any, retry_count=0):
+    def __make_request(self, http_method: str, path: str, params: any, payload: any, forced_mode: str, retry_count=0):
         """
         Private method that makes the actual request. Returns the response in JSON format for both
         success and error responses.
@@ -92,14 +92,21 @@ class Py3CW(IPy3CW):
         """
         absolute_url = f"{API_URL}{relative_url}"
 
+        """
+        Add forced mode to headers. Force mode should be in ['real', 'paper'].
+        """
+        headers = {
+            'APIKEY': self.key,
+            'Signature': signature
+        }
+        if forced_mode:
+            headers["Forced-Mode"] = forced_mode
+
         try:
             response = self.session.request(
                 method=http_method,
                 url=absolute_url,
-                headers={
-                    'APIKEY': self.key,
-                    'Signature': signature
-                },
+                headers=headers,
                 json=payload,
                 timeout=(self.request_timeout, self.request_timeout)
             )
@@ -118,7 +125,8 @@ class Py3CW(IPy3CW):
                         path=path,
                         params=params,
                         payload=payload,
-                        retry_count=retry_count + 1
+                        retry_count=retry_count + 1,
+                        forced_mode=forced_mode
                     )
                 else:
                     return response_json, {}
@@ -129,12 +137,15 @@ class Py3CW(IPy3CW):
             return {'error': True, 'msg': 'HTTP error occurred: {0}'.format(http_err)}, None
 
         except Exception:
-            return {'error': True, 'msg': 'Other error occurred: {} {}.'.format(
-                response_json.get('error'), response_json.get('error_description'))}, None
+            return {'error': True, 'msg': 'Other error occurred: {} {} {}.'.format(
+                response_json.get('error'),
+                response_json.get('error_description'),
+                response_json.get('error_attributes')
+            )}, None
 
     @verify_request
     def request(self, entity: str, action: str = '', action_id: str = None, action_sub_id: str = None,
-                payload: any = None):
+                payload: any = None, forced_mode: str = None):
         """
         Constructs the API Url and makes the request.
         """
@@ -153,5 +164,7 @@ class Py3CW(IPy3CW):
                 api_path=api_path or ''
             ),
             params=urlencode(payload, quote_via=quote_plus) if is_get_with_payload else '',
-            payload=payload
+            payload=payload,
+            forced_mode=forced_mode
         )
+
