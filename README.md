@@ -72,6 +72,9 @@ An `action` is represented by a ... well, an action of a specific category. Ther
 
 `payload` is the data you send.
 
+[Forced mode header](https://github.com/3commas-io/3commas-official-api-docs#api-modesreal-or-paper) could be added with the parameter `additional_headers`. Allowed values are 'real' or 'paper'. E.g. 
+`... additional_headers={'Forced-Mode': 'paper'} ...`
+
 ***
 
 3Commas API helpers.
