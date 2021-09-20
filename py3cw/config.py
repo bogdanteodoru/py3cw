@@ -54,6 +54,7 @@ API_METHODS = {
         'delete': ('POST', '{id}/delete'),
         'panic_sell_all_deals': ('POST', '{id}/panic_sell_all_deals'),
         'cancel_all_deals': ('POST', '{id}/cancel_all_deals'),
+        'copy_and_create': ('POST', '{id}/copy_and_create'),
         'show': ('GET', '{id}/show'),
         'deals_stats': ('GET', '{id}/deals_stats')
     },
