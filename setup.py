@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='py3cw',
-    version='0.0.26',
+    version='0.0.27',
 
     description='3commas Python wrapper',
 
