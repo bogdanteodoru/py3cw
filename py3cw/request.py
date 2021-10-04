@@ -130,7 +130,12 @@ class Py3CW(IPy3CW):
         except HTTPError as http_err:
             return {'error': True, 'msg': 'HTTP error occurred: {0}'.format(http_err)}, None
 
-        except Exception:
+        except Exception as generic_exc:
+            if not 'response_json' in locals():
+                return {
+                    'error': True,
+                    'msg': 'Other error occurred: {}'.format(generic_exc.args[0])
+                }, None
             return {'error': True, 'msg': 'Other error occurred: {} {} {}.'.format(
                 response_json.get('error'),
                 response_json.get('error_description'),
