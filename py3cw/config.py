@@ -40,6 +40,7 @@ API_METHODS = {
         'market_orders': ('GET', '{id}/market_orders'),
         'add_funds': ('POST', '{id}/add_funds'),
         'data_for_adding_funds': ('GET', '{id}/data_for_adding_funds'),
+        'convert_to_smart_trade': ('POST', '{id}/convert_to_smart_trade'),
     },
     'bots': {
         '': ('GET', ''),
