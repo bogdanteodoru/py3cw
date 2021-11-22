@@ -11,6 +11,10 @@ def verify_request(func):
         entity = kw.get('entity')
         action = kw.get('action')
         action_id = kw.get('action_id')
+
+        if action == None:
+            action = ""
+
         api = API_METHODS[entity][action]
         method, api_path = api
 
