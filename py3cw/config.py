@@ -17,6 +17,7 @@ API_METHODS = {
         'sell_all_to_usd': ('POST', '{id}/sell_all_to_usd'),
         'sell_all_to_btc': ('POST', '{id}/sell_all_to_btc'),
         'convert_dust_to_bnb': ('POST', '{id}/convert_dust_to_bnb'),
+        'networks_info': ('POST', '{id}/networks_info'),
         'rename': ('POST', '{id}/rename'),
         'pie_chart_data': ('POST', '{id}/pie_chart_data'),
         'account_table_data': ('POST', '{id}/account_table_data'),
