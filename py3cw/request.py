@@ -35,7 +35,8 @@ class Py3CW(IPy3CW):
         self.request_timeout = request_options.get('request_timeout', 30)
         self.request_retries_count = request_options.get('nr_of_retries', 5)
         self.request_retry_status_codes = request_options.get('retry_status_codes', [500, 502, 503, 504])
-
+        self.request_retry_backoff_factor = request_options.get('retry_backoff_factor', 0.1)
+        
         """
         Set the number of retries to be 5 every 0.1 seconds... then 0.2, 0.3...
         You get the idea.
@@ -43,7 +44,7 @@ class Py3CW(IPy3CW):
         self.session = requests.Session()
         retries = Retry(
             total=self.request_retries_count,
-            backoff_factor=0.1,
+            backoff_factor=self.request_retry_backoff_factor,
             status_forcelist=self.request_retry_status_codes
         )
         self.session.mount('https://', HTTPAdapter(max_retries=retries))
