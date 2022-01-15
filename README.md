@@ -18,10 +18,17 @@ from py3cw.request import Py3CW
 
 # request_options is optional, as all the keys from the dict
 # so you can only change what you want.
+#
 # default options for request_options are:
 # request_timeout: 30s (30 for connect, 30 for read)
 # nr_of_retries: 5
 # retry_status_codes: [500, 502, 503, 504]
+# retry_backoff_factor (optional): It allows you to change how long the processes will sleep between failed requests.
+# For example, if the backoff factor is set to:
+# 1 second the successive sleeps will be 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256.
+# 2 seconds - 1, 2, 4, 8, 16, 32, 64, 128, 256, 512
+# 10 seconds - 5, 10, 20, 40, 80, 160, 320, 640, 1280, 2560
+# 
 # NOTE: Nr of retries and retry_status_codes will also be used if we get 
 # an falsy success from 3 commas (eg: { "error": { "status_code": 502 }})
 p3cw = Py3CW(
@@ -30,7 +37,8 @@ p3cw = Py3CW(
     request_options={
         'request_timeout': 10,
         'nr_of_retries': 1,
-        'retry_status_codes': [502]
+        'retry_status_codes': [502],
+        'retry_backoff_factor': 0.1
     }
 )
 
