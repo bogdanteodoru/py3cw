@@ -9,7 +9,7 @@ def verify_request(func):
         """
 
         entity = kw.get('entity')
-        action = kw.get('action') or ''
+        action = kw.get('action', '')
         action_id = kw.get('action_id')
         api = API_METHODS[entity][action]
         method, api_path = api
