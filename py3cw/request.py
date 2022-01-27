@@ -124,12 +124,16 @@ class Py3CW(IPy3CW):
                         retry_count=retry_count + 1
                     )
                 else:
+                    response_json['status_code'] = error_status_code
                     return response_json, {}
             else:
                 return {}, response_json
 
         except HTTPError as http_err:
-            return {'error': True, 'msg': 'HTTP error occurred: {0}'.format(http_err)}, None
+            error = {'error': True,
+                    'msg': 'HTTP error occurred: {0}'.format(http_err),
+                    'status_code': http_err.response.status_code if http_err.response else None}
+            return error, None
 
         except Exception as generic_exc:
             if not 'response_json' in locals():
