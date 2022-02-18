@@ -136,16 +136,20 @@ class Py3CW(IPy3CW):
             return error, {}
 
         except Exception as generic_exc:
+            status_code = None
+            if 'response' in locals():
+                status_code = response.status_code
             if not 'response_json' in locals():
                 return {
                     'error': True,
-                    'msg': 'Other error occurred: {}'.format(generic_exc.args[0])
+                    'msg': 'Other error occurred: {}'.format(generic_exc.args[0]),
+                    'status_code': status_code
                 }, {}
             return {'error': True, 'msg': 'Other error occurred: {} {} {}.'.format(
                 response_json.get('error'),
                 response_json.get('error_description'),
-                response_json.get('error_attributes')
-            )}, {}
+                response_json.get('error_attributes')),
+                    'status_code': status_code}, {}
 
     @verify_request
     def request(self, entity: str, action: str = '', action_id: str = None, action_sub_id: str = None,
