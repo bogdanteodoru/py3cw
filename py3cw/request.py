@@ -133,19 +133,19 @@ class Py3CW(IPy3CW):
             error = {'error': True,
                     'msg': 'HTTP error occurred: {0}'.format(http_err),
                     'status_code': http_err.response.status_code if http_err.response else None}
-            return error, None
+            return error, {}
 
         except Exception as generic_exc:
             if not 'response_json' in locals():
                 return {
                     'error': True,
                     'msg': 'Other error occurred: {}'.format(generic_exc.args[0])
-                }, None
+                }, {}
             return {'error': True, 'msg': 'Other error occurred: {} {} {}.'.format(
                 response_json.get('error'),
                 response_json.get('error_description'),
                 response_json.get('error_attributes')
-            )}, None
+            )}, {}
 
     @verify_request
     def request(self, entity: str, action: str = '', action_id: str = None, action_sub_id: str = None,
