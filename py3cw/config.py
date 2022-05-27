@@ -105,6 +105,7 @@ API_METHODS = {
         'cancel': ('DELETE', '{id}'),
         'get_trades': ('GET', '{id}/trades'),
         'add_funds': ('POST', '{id}/add_funds'),
+        'reduce_funds': ('POST', '{id}/reduce_funds'),
         'close_by_market': ('POST', '{id}/close_by_market'),
         'cancel_trade': ('DELETE', '{id}/trades/{sub_id}'),
         'panic_close_by_market': ('POST', '{id}/trades/{sub_id}/close_by_market'),
