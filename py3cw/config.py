@@ -78,7 +78,8 @@ API_METHODS = {
     },
     'marketplace': {
         'items': ('GET', 'items'),
-        'signals': ('GET', '{id}/signals')
+        'signals': ('GET', '{id}/signals'),
+        'presets': ('GET', 'presets')
     },
     # smart_trades has been deprecated
     # Please don't use it anymore. Left here only for history reference
