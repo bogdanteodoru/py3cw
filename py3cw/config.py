@@ -116,6 +116,8 @@ API_METHODS = {
     },
     'users': {
         'change_mode': ('POST', 'change_mode'),
-        'current_mode': ('GET', 'current_mode')
+        'current_mode': ('GET', 'current_mode'),
+        'locale': ('PUT', 'locale'),
+        'permissions_info': ('GET', 'permissions_info')
     }
 }
