@@ -33,7 +33,8 @@ from py3cw.request import Py3CW
 # an falsy success from 3 commas (eg: { "error": { "status_code": 502 }})
 p3cw = Py3CW(
     key='', 
-    secret='',
+    secret='',                                      #System generated secret key
+    selfsigned='',                          #RSA generated private key
     request_options={
         'request_timeout': 10,
         'nr_of_retries': 1,
@@ -88,6 +89,8 @@ An `action` is represented by a ... well, an action of a specific category. Ther
 3Commas API helpers.
 
 3Commas Docs: https://github.com/3commas-io/3commas-official-api-docs
+
+Signed Endpoints RSA: https://github.com/3commas-io/3commas-official-api-docs/blob/master/signed_endpoints_rsa.md
 
 Accounts: https://github.com/3commas-io/3commas-official-api-docs/blob/master/accounts_api.md
 
