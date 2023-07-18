@@ -1,5 +1,10 @@
 import hashlib
-import hmac
+import hmac 
+from Crypto.Signature import pkcs1_15
+from Crypto.Hash import SHA256
+from Crypto.PublicKey import RSA
+from base64 import b64encode
+import base64
 import requests
 import json
 from .config import API_URL, API_VERSION_V1, API_VERSION_V2, API_VERSION_V2_ENTITIES, API_METHODS
@@ -17,21 +22,23 @@ class IPy3CW:
 
 class Py3CW(IPy3CW):
 
-    def __init__(self, key: str, secret: str, request_options=None):
+    def __init__(self, key: str, secret: str = None, selfsigned: str = None, request_options = None):
         """
         Init the library with a 3commas key and secret strings. Get keys from your account API
         (https://3commas.io/api_access_tokens) page
         """
-
+        
         if request_options is None:
             request_options = {}
         if key is None or key == '':
             raise ValueError('Please enter a 3commas API key')
-        if secret is None or secret == '':
-            raise ValueError('Please enter a 3commas API secret')
+        if (secret is None or secret == '') and (selfsigned is None or selfsigned == ''):
+            raise ValueError('Please enter a 3Commas API secret or Private Key')
+            
 
         self.key = key
         self.secret = secret
+        self.selfsigned = selfsigned
         self.request_timeout = request_options.get('request_timeout', 30)
         self.request_retries_count = request_options.get('nr_of_retries', 5)
         self.request_retry_status_codes = request_options.get('retry_status_codes', [500, 502, 503, 504])
@@ -53,9 +60,18 @@ class Py3CW(IPy3CW):
         """
         Generates the signature needed for 3commas API communication
         """
-        encoded_key = str.encode(self.secret)
-        message = str.encode(path + data)
-        signature = hmac.new(encoded_key, message, hashlib.sha256).hexdigest()
+        if self.selfsigned is None:
+            encoded_key = str.encode(self.secret)
+            message = str.encode(path + data)
+            signature = hmac.new(encoded_key, message, hashlib.sha256).hexdigest()
+
+        else:
+            encoded_key = RSA.import_key(self.selfsigned)
+            message = str.encode(path + data)
+            h = SHA256.new(message)
+            signer = pkcs1_15.new(encoded_key)
+            signature = b64encode(signer.sign(h)).decode('utf-8')
+
         return signature
 
     def __make_request(self, http_method: str, path: str, params: any, payload: any, additional_headers: dict,
