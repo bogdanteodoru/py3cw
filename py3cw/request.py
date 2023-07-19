@@ -60,7 +60,7 @@ class Py3CW(IPy3CW):
         """
         Generates the signature needed for 3commas API communication
         """
-        if self.selfsigned is None:
+        if self.selfsigned is None or self.selfsigned == '':
             encoded_key = str.encode(self.secret)
             message = str.encode(path + data)
             signature = hmac.new(encoded_key, message, hashlib.sha256).hexdigest()
